@@ -65,6 +65,7 @@
           <element id="library" level="project" name="Maven: net.java.dev.jna:jna-platform:4.1.0" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:18.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-simple:1.7.21" />
+          <element id="library" level="project" name="Maven: org.modelmapper:modelmapper:0.7.5" />
         </element>
       </element>
       <element id="directory" name="META-INF">
