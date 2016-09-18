@@ -1,8 +1,6 @@
 package YisoNote.note.service.base;
 
-import YisoNote.note.viewModel.FolderAddModel;
-import YisoNote.note.viewModel.FolderEditModel;
-import YisoNote.note.viewModel.FolderView;
+import YisoNote.note.viewModel.*;
 
 import java.util.List;
 
@@ -11,5 +9,15 @@ import java.util.List;
  */
 public interface INoteService {
 
+    NoteView AddNote(NoteAddModel model);
 
+    NoteView EditNote(NoteEditModel model);
+
+    void DeleteNote(int noteId);
+
+    NoteView MoveToFolder(int noteId, int folderId);
+
+    NoteView GetNote(int noteId);
+
+    List<NoteView> GetNoteListInFolder(int folderId);
 }

@@ -7,9 +7,9 @@ import YisoNote.common.model.base.Entity;
  */
 public interface IWriteRepository<T extends Entity> {
 
-    void Add(T item);
+    T Add(T item);
 
-    void Update(T item);
+    T Update(T item);
 
     void Delete(int id);
 }

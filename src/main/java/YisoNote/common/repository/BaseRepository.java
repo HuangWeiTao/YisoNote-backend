@@ -3,9 +3,11 @@ package YisoNote.common.repository;
 
 import YisoNote.common.model.base.Entity;
 import YisoNote.common.view.Pager;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
 
@@ -20,11 +22,11 @@ public abstract class BaseRepository<T extends Entity> implements IReadRepositor
     }
 
     @Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
-    private Session GetCurrentSession(){
-        //Session session = sessionFactory.getCurrentSession();使用这个会报错：Could not obtain transaction-synchronized Session for current thread
-        Session session = sessionFactory.openSession();
+    protected Session GetCurrentSession(){
+        Session session = sessionFactory.getCurrentSession();
+
         return session;
     }
 
@@ -37,13 +39,12 @@ public abstract class BaseRepository<T extends Entity> implements IReadRepositor
     public Pager<T> GetList(int page, int pageSize) {
         List<T> list = GetCurrentSession().createCriteria(cls).list().subList((page - 1) * pageSize, page * pageSize - 1);
 
-        Pager<T> listPage = new Pager<T>() ;
-        if(list.size()!=0){
+        Pager<T> listPage = new Pager<T>();
+        if (list.size() != 0) {
             listPage.setCurrentItems(list);
             listPage.setCurrentPage(page);
             listPage.setPageSize(pageSize);
-        }
-        else{
+        } else {
             listPage.setCurrentItems(list);
             listPage.setCurrentPage(0);
             listPage.setPageSize(pageSize);
@@ -53,16 +54,24 @@ public abstract class BaseRepository<T extends Entity> implements IReadRepositor
     }
 
     @Override
-    public void Add(T item) {
+    public List<T> GetAll() {
 
-        GetCurrentSession().save(item);
-
+        List<T> list = GetCurrentSession().createCriteria(cls).list();
+        return list;
     }
 
     @Override
-    public void Update(T item) {
+    public T Add(T item) {
 
-        GetCurrentSession().save(item);
+        int id = (int)GetCurrentSession().save(item);
+        return GetById(id);
+    }
+
+    @Override
+    public T Update(T item) {
+
+        int id = (int)GetCurrentSession().save(item);
+        return GetById(id);
     }
 
     @Override

@@ -1,21 +1,20 @@
 package YisoNote.common.model.base;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Ken on 2016/9/9.
  */
 @javax.persistence.Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Entity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
-    private Date createTime;
-    private Date updateTime;
+    private Date createTime = new Date();
+    private Date updateTime = new Date();
     private Date deleteTime;
     private boolean isDelete;
 

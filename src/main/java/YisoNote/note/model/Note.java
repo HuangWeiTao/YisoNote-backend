@@ -3,6 +3,8 @@ package YisoNote.note.model;
 import YisoNote.common.model.base.DescriptiveEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
@@ -10,6 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Note")
+
 public class Note extends DescriptiveEntity {
     private String storePath;
     private int folderId;

@@ -13,4 +13,6 @@ public interface IReadRepository<T extends Entity>  {
     T GetById(int id);
 
     Pager<T> GetList(int page, int pageSize);
+
+    List<T> GetAll();
 }

@@ -9,7 +9,6 @@ import YisoNote.note.viewModel.FolderEditModel;
 import YisoNote.note.viewModel.FolderView;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +28,17 @@ public class FolderService implements IFolderService {
 
     @Override
     public List<FolderView> GetMyFolders() {
-        List<Folder> folderList =  folderRepository.GetChildrenFolder(Folder.RootFolderId,true);
+        List<Folder> folderList = folderRepository.GetChildrenFolder(Folder.RootFolderId, true);
 
-        ModelMapper modelMapper = ModelMapperHelper.GetMapper();
-        List<FolderView> viewList =  folderList.stream().map(model->modelMapper.map(model,FolderView.class)).collect(Collectors.toList());
+        if (folderList != null) {
+            ModelMapper modelMapper = ModelMapperHelper.GetMapper();
+            List<FolderView> viewList = folderList.stream().map(model -> modelMapper.map(model, FolderView.class)).collect(Collectors.toList());
 
-        return viewList;
+            return viewList;
+
+        } else {
+            return null;
+        }
     }
 
     @Override
